@@ -1,0 +1,55 @@
+{
+  "name": "@eci-soundscribe/mcp-research-insights",
+  "version": "1.0.0",
+  "description": "Research & Insights MCP server for SoundScribe - 18 tools for bulk analysis, validation, and Signal export",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "mcp-research-insights": "dist/index.js"
+  },
+  "author": "ECI Software Solutions",
+  "license": "MIT",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ecisolutions/mcp-research-insights.git"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "soundscribe",
+    "research",
+    "insights",
+    "analysis"
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/index.ts",
+    "start": "node dist/index.js",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4",
+    "@supabase/supabase-js": "^2.45.0",
+    "winston": "^3.13.0",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.4.5",
+    "tsx": "^4.7.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "SETUP_COMPLETE.md",
+    "QUICK_START.txt"
+  ]
+}

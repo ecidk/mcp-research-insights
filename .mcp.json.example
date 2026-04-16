@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "research-insights": {
+      "type": "stdio",
+      "command": "node /Users/derick/Documents/GitHub/ECI-SoundScribe/mcp-research-insights/dist/index.js",
+      "env": {
+        "SUPABASE_URL": "https://YOUR-PROJECT.supabase.co",
+        "SUPABASE_SERVICE_ROLE_KEY": "${SUPABASE_SERVICE_ROLE_KEY}"
+      }
+    }
+  }
+}
