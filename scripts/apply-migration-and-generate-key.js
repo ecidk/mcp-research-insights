@@ -43,7 +43,7 @@ async function applyMigrationAndGenerateKey() {
     if (checkError && checkError.code === '42P01') {
       console.log('   ⚠️  Table does not exist.\n');
       console.log('   Please run this SQL in Supabase SQL Editor:');
-      console.log('   → Open: https://supabase.com/dashboard/project/qinkldgvejheppheykfl/sql/new');
+      console.log('   → Open: https://supabase.com/dashboard/project/YOUR-PROJECT/sql/new');
       console.log('   → Copy SQL from: mcp-research-insights/scripts/create-simple-table.sql\n');
       console.log('   Or run in your terminal:');
       console.log('   cat mcp-research-insights/scripts/create-simple-table.sql\n');

@@ -71,7 +71,7 @@ Or create one in Supabase (table `ux_mcp_api_keys`) following your team’s proc
 
 Your `.env` file has been updated with:
 ```env
-SUPABASE_URL=https://qinkldgvejheppheykfl.supabase.co
+SUPABASE_URL=https://YOUR-PROJECT.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=<configured>
 MCP_SERVER_NAME=research-insights
 ```
@@ -88,7 +88,7 @@ cat > ~/.claude/config/.mcp.json << 'EOF'
       "type": "stdio",
       "command": "node /Users/derick/Documents/GitHub/ECI-SoundScribe/mcp-research-insights/dist/index.js",
       "env": {
-        "SUPABASE_URL": "https://qinkldgvejheppheykfl.supabase.co",
+        "SUPABASE_URL": "https://YOUR-PROJECT.supabase.co",
         "SUPABASE_SERVICE_ROLE_KEY": "${SUPABASE_SERVICE_ROLE_KEY}"
       }
     }
@@ -107,7 +107,7 @@ Add this to your existing configuration:
       "type": "stdio",
       "command": "node /Users/derick/Documents/GitHub/ECI-SoundScribe/mcp-research-insights/dist/index.js",
       "env": {
-        "SUPABASE_URL": "https://qinkldgvejheppheykfl.supabase.co",
+        "SUPABASE_URL": "https://YOUR-PROJECT.supabase.co",
         "SUPABASE_SERVICE_ROLE_KEY": "${SUPABASE_SERVICE_ROLE_KEY}"
       }
     }
@@ -175,7 +175,7 @@ Use research-insights MCP to calculate confidence distribution:
 
 ### View API Key in Supabase
 
-1. Go to: https://supabase.com/dashboard/project/qinkldgvejheppheykfl/editor
+1. Go to: https://supabase.com/dashboard/project/YOUR-PROJECT/editor
 2. Select table: `ux_mcp_api_keys`
 3. Find your key row by name or `api_key_prefix` (never store the full secret in git)
 
