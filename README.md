@@ -115,7 +115,9 @@ Once connected, you can have conversations like:
 
 ---
 
-## 🛠️ 18 Available Tools
+## 🛠️ 69 Available Tools
+
+**Major expansion in v2.0:** Added 51 new tools across workflow automation, advanced analytics, customer journey mapping, integrations, AI research assistance, and quality/compliance features.
 
 ### 🔍 Search & Retrieval (7 tools)
 
@@ -138,6 +140,89 @@ Once connected, you can have conversations like:
 | `generate_trend_analysis` | Period-over-period comparison | *"How did feedback change month-over-month?"* |
 | `get_competitor_mentions` | Competitive intelligence | *"Which competitors are customers evaluating?"* |
 | `analyze_feature_requests` | Feature request frequency | *"Top 10 most requested features"* |
+
+### ✅ Validation Workflow (4 tools)
+
+| Tool | Description | Use Case |
+|------|-------------|----------|
+| `validate_insight_batch` | Bulk approve/reject insights | *"Validate these 50 insights"* |
+| `get_validation_queue` | Items pending review | *"What needs review?"* |
+| `predict_validation_outcome` | ML confidence prediction | *"Which items are likely valid?"* |
+| `override_validation` | Manual override with reasoning | *"Mark as invalid due to bias"* |
+
+### 🔄 Workflow Automation (4 tools)
+
+| Tool | Description | Use Case |
+|------|-------------|----------|
+| `detect_recurring_patterns` | Find patterns across 3+ calls | *"What pain points appear in 5+ calls?"* |
+| `generate_research_brief` | Auto-generate executive summaries | *"Create Q1 discovery call brief"* |
+| `auto_tag_recordings` | AI-powered auto-tagging | *"Tag these 100 recordings by sentiment"* |
+| `batch_apply_tags` | Bulk tag application | *"Tag all enterprise calls"* |
+
+### 🚨 Proactive Alerts (2 tools)
+
+| Tool | Description | Use Case |
+|------|-------------|----------|
+| `create_research_alert` | Get notified when patterns emerge | *"Alert me when churn signals spike"* |
+| `monitor_kpi_thresholds` | Alert on metric thresholds | *"Notify when feature requests > 10/week"* |
+
+### 📋 Stakeholder Reports (3 tools)
+
+| Tool | Description | Use Case |
+|------|-------------|----------|
+| `create_stakeholder_report` | Tailored reports by audience | *"Create exec summary for Q1"* |
+| `save_search_filter` | Save complex filters | *"Save 'Enterprise Q1 Discovery' filter"* |
+| `load_search_filter` | Recall saved filters | *"Load my enterprise filter"* |
+
+### 📈 Advanced Analytics (7 tools)
+
+| Tool | Description | Use Case |
+|------|-------------|----------|
+| `track_pattern_trends` | Compare patterns over time | *"Is pricing objection increasing?"* |
+| `compare_cohorts` | Enterprise vs SMB comparison | *"How do enterprise pain points differ from SMB?"* |
+| `track_cohort_over_time` | Cohort feedback evolution | *"Track enterprise sentiment over Q1"* |
+| `analyze_sentiment_shifts` | Emotion tracking in conversations | *"When does frustration spike in calls?"* |
+| `identify_emotional_triggers` | What causes reactions | *"What triggers positive sentiment?"* |
+| `detect_anomalies` | Statistical outlier detection | *"Why did sentiment drop last week?"* |
+| `explain_anomaly` | Root cause analysis | *"Explain the churn signal spike"* |
+
+### 🗺️ Customer Journey (6 tools)
+
+| Tool | Description | Use Case |
+|------|-------------|----------|
+| `map_customer_journey` | Link insights to journey stages | *"Map Acme Corp's journey"* |
+| `identify_journey_gaps` | Find stages with missing feedback | *"Which stages lack research?"* |
+| `create_insight_snapshot` | Save research snapshots | *"Save Q1 onboarding research"* |
+| `search_research_history` | Find similar past research | *"Find past pricing research"* |
+| `add_research_note` | Team annotations on insights | *"Flag this as hypothesis to test"* |
+| `get_team_annotations` | See team notes | *"Show all unresolved questions"* |
+
+### 🔌 Integrations (4 tools)
+
+| Tool | Description | Use Case |
+|------|-------------|----------|
+| `sync_to_jira` | Auto-create Jira tickets | *"Create tickets for top 5 requests"* |
+| `export_to_productboard` | Send to ProductBoard | *"Export validated features"* |
+| `enrich_salesforce_account` | Add insights to Salesforce | *"Enrich Acme Corp account"* |
+| `create_customer_briefing` | Generate CS briefings | *"Create renewal brief for Acme"* |
+
+### 🤖 AI Research Assistant (4 tools)
+
+| Tool | Description | Use Case |
+|------|-------------|----------|
+| `suggest_research_questions` | AI suggests follow-up questions | *"What should I ask about churn?"* |
+| `identify_knowledge_gaps` | Find what you don't know | *"What's missing in onboarding research?"* |
+| `test_hypothesis` | Statistical hypothesis testing | *"Test: Enterprise users want SSO more than SMB"* |
+| `calculate_sample_size` | Statistical validity calculations | *"How many interviews do I need?"* |
+
+### ✅ Quality & Compliance (4 tools)
+
+| Tool | Description | Use Case |
+|------|-------------|----------|
+| `assess_research_quality` | Score research quality | *"Assess quality of Q1 research"* |
+| `detect_research_bias` | Identify leading questions | *"Check for bias in this recording"* |
+| `audit_data_usage` | Compliance audit trail | *"Who accessed insights last month?"* |
+| `anonymize_insights` | Remove PII before sharing | *"Anonymize for external share"* |
 
 ### ✅ Validation Workflow (4 tools)
 

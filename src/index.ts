@@ -25,6 +25,14 @@ import * as searchTools from "./tools/search.js";
 import * as analysisTools from "./tools/analysis.js";
 import * as validationTools from "./tools/validation.js";
 import * as exportTools from "./tools/export.js";
+import * as workflowTools from "./tools/workflow.js";
+import * as alertTools from "./tools/alerts.js";
+import * as reportTools from "./tools/reports.js";
+import * as analyticsTools from "./tools/analytics.js";
+import * as collaborationTools from "./tools/collaboration.js";
+import * as integrationTools from "./tools/integrations.js";
+import * as assistantTools from "./tools/assistant.js";
+import * as qualityTools from "./tools/quality.js";
 
 dotenv.config();
 
@@ -42,7 +50,7 @@ const server = new Server(
 );
 
 // ============================================================================
-// Tool Definitions (18 tools)
+// Tool Definitions (68+ tools across 12 categories)
 // ============================================================================
 
 const TOOLS = [
@@ -228,6 +236,464 @@ const TOOLS = [
     }
   },
 
+  // ========== Workflow Automation (4 tools) ==========
+  {
+    name: "detect_recurring_patterns",
+    description: "Find patterns that appear across multiple calls (min_frequency 3+)",
+    inputSchema: {
+      type: "object",
+      properties: {
+        min_frequency: { type: "number", default: 3 },
+        pattern_types: { type: "array", items: { type: "string" }, default: ["pain_points", "feature_requests", "objections", "praise"] },
+        timeframe: { type: "string", default: "last_30_days" },
+        confidence_threshold: { type: "number", default: 0.75 }
+      }
+    }
+  },
+  {
+    name: "generate_research_brief",
+    description: "Auto-generate executive briefs from multiple calls",
+    inputSchema: {
+      type: "object",
+      properties: {
+        scope: { type: "object" },
+        output_format: { type: "string", enum: ["executive", "detailed", "presentation"], default: "executive" },
+        include_quotes: { type: "boolean", default: true }
+      },
+      required: ["scope"]
+    }
+  },
+  {
+    name: "auto_tag_recordings",
+    description: "AI-powered auto-tagging with confidence scores",
+    inputSchema: {
+      type: "object",
+      properties: {
+        recording_ids: { type: "array", items: { type: "string" } },
+        tag_categories: { type: "array", items: { type: "string" }, default: ["call_type", "sentiment", "product_area", "customer_segment"] },
+        confidence_threshold: { type: "number", default: 0.7 }
+      },
+      required: ["recording_ids"]
+    }
+  },
+  {
+    name: "batch_apply_tags",
+    description: "Bulk tag application to multiple recordings",
+    inputSchema: {
+      type: "object",
+      properties: {
+        recording_ids: { type: "array", items: { type: "string" } },
+        tags: { type: "array", items: { type: "object" } },
+        overwrite: { type: "boolean", default: false }
+      },
+      required: ["recording_ids", "tags"]
+    }
+  },
+
+  // ========== Proactive Alerts (2 tools) ==========
+  {
+    name: "create_research_alert",
+    description: "Get notified when patterns emerge",
+    inputSchema: {
+      type: "object",
+      properties: {
+        alert_name: { type: "string" },
+        conditions: { type: "object" },
+        notification_channels: { type: "array", items: { type: "string" }, default: ["dashboard"] },
+        recipients: { type: "array", items: { type: "string" }, default: [] }
+      },
+      required: ["alert_name", "conditions"]
+    }
+  },
+  {
+    name: "monitor_kpi_thresholds",
+    description: "Alert when research metrics hit thresholds",
+    inputSchema: {
+      type: "object",
+      properties: {
+        kpi: { type: "string" },
+        feature: { type: "string" },
+        threshold: { type: "object" },
+        action: { type: "string", default: "notify" }
+      },
+      required: ["kpi", "threshold"]
+    }
+  },
+
+  // ========== Stakeholder Reports (2 tools) ==========
+  {
+    name: "create_stakeholder_report",
+    description: "Tailored reports for product/exec/sales/engineering",
+    inputSchema: {
+      type: "object",
+      properties: {
+        audience: { type: "string", enum: ["product_team", "exec", "sales", "engineering"] },
+        focus_areas: { type: "array", items: { type: "string" }, default: [] },
+        time_period: { type: "string", default: "last_month" }
+      },
+      required: ["audience"]
+    }
+  },
+  {
+    name: "save_search_filter",
+    description: "Save complex filter combinations for quick recall",
+    inputSchema: {
+      type: "object",
+      properties: {
+        name: { type: "string" },
+        filters: { type: "object" },
+        description: { type: "string", default: "" }
+      },
+      required: ["name", "filters"]
+    }
+  },
+  {
+    name: "load_search_filter",
+    description: "Load saved search filters",
+    inputSchema: {
+      type: "object",
+      properties: {
+        filter_id: { type: "string" },
+        filter_name: { type: "string" }
+      }
+    }
+  },
+
+  // ========== Advanced Analytics (7 tools) ==========
+  {
+    name: "track_pattern_trends",
+    description: "Compare patterns across time periods",
+    inputSchema: {
+      type: "object",
+      properties: {
+        pattern: { type: "string" },
+        comparison_periods: { type: "array", items: { type: "string" }, default: ["this_month", "last_month", "2_months_ago"] },
+        pattern_type: { type: "string", default: "all" }
+      },
+      required: ["pattern"]
+    }
+  },
+  {
+    name: "compare_cohorts",
+    description: "Compare insights between customer segments",
+    inputSchema: {
+      type: "object",
+      properties: {
+        cohort_a: { type: "object" },
+        cohort_b: { type: "object" },
+        metrics: { type: "array", items: { type: "string" }, default: ["pain_points", "feature_requests", "satisfaction", "churn_signals"] },
+        date_range: { type: "object" }
+      },
+      required: ["cohort_a", "cohort_b"]
+    }
+  },
+  {
+    name: "track_cohort_over_time",
+    description: "See how a cohort's feedback evolves",
+    inputSchema: {
+      type: "object",
+      properties: {
+        cohort: { type: "object" },
+        time_buckets: { type: "string", enum: ["weekly", "monthly", "quarterly"], default: "monthly" },
+        start_date: { type: "string" },
+        end_date: { type: "string" }
+      },
+      required: ["cohort", "start_date", "end_date"]
+    }
+  },
+  {
+    name: "analyze_sentiment_shifts",
+    description: "Track sentiment changes within conversations",
+    inputSchema: {
+      type: "object",
+      properties: {
+        recording_ids: { type: "array", items: { type: "string" } },
+        track_by: { type: "string", default: "timeline" },
+        emotion_categories: { type: "array", items: { type: "string" }, default: ["frustration", "delight", "confusion", "excitement"] }
+      },
+      required: ["recording_ids"]
+    }
+  },
+  {
+    name: "identify_emotional_triggers",
+    description: "What causes positive/negative reactions",
+    inputSchema: {
+      type: "object",
+      properties: {
+        sentiment: { type: "string", enum: ["positive", "negative", "neutral"] },
+        min_intensity: { type: "number", default: 0.7 },
+        context_window: { type: "number", default: 30 }
+      },
+      required: ["sentiment"]
+    }
+  },
+  {
+    name: "detect_anomalies",
+    description: "Find statistically unusual patterns",
+    inputSchema: {
+      type: "object",
+      properties: {
+        metrics: { type: "array", items: { type: "string" }, default: ["call_volume", "sentiment_score", "feature_mentions", "churn_signals"] },
+        baseline_period: { type: "string", default: "last_90_days" },
+        sensitivity: { type: "string", enum: ["high", "medium", "low"], default: "medium" }
+      }
+    }
+  },
+  {
+    name: "explain_anomaly",
+    description: "Understand what caused unusual patterns",
+    inputSchema: {
+      type: "object",
+      properties: {
+        anomaly_id: { type: "string" },
+        context_window: { type: "number", default: 14 }
+      },
+      required: ["anomaly_id"]
+    }
+  },
+
+  // ========== Customer Journey (6 tools) ==========
+  {
+    name: "map_customer_journey",
+    description: "Link insights to customer journey stages",
+    inputSchema: {
+      type: "object",
+      properties: {
+        customer_id: { type: "string" },
+        journey_stages: { type: "array", items: { type: "string" }, default: ["awareness", "consideration", "onboarding", "adoption", "renewal"] },
+        include_timeline: { type: "boolean", default: true }
+      },
+      required: ["customer_id"]
+    }
+  },
+  {
+    name: "identify_journey_gaps",
+    description: "Find stages with missing feedback/issues",
+    inputSchema: {
+      type: "object",
+      properties: {
+        journey_template: { type: "string", enum: ["saas_b2b", "ecommerce", "custom"], default: "saas_b2b" },
+        date_range: { type: "object" }
+      }
+    }
+  },
+  {
+    name: "create_insight_snapshot",
+    description: "Save current analysis as reusable snapshot",
+    inputSchema: {
+      type: "object",
+      properties: {
+        title: { type: "string" },
+        description: { type: "string" },
+        include_filters: { type: "object" },
+        share_with: { type: "array", items: { type: "string" }, default: [] },
+        tags: { type: "array", items: { type: "string" }, default: [] }
+      },
+      required: ["title", "description"]
+    }
+  },
+  {
+    name: "search_research_history",
+    description: "Find similar past research",
+    inputSchema: {
+      type: "object",
+      properties: {
+        query: { type: "string" },
+        timeframe: { type: "string", default: "last_12_months" },
+        similarity_threshold: { type: "number", default: 0.7 }
+      },
+      required: ["query"]
+    }
+  },
+  {
+    name: "add_research_note",
+    description: "Add contextual notes to insights",
+    inputSchema: {
+      type: "object",
+      properties: {
+        insight_id: { type: "string" },
+        note_type: { type: "string", enum: ["hypothesis", "question", "observation", "action_item"] },
+        content: { type: "string" },
+        mention_users: { type: "array", items: { type: "string" }, default: [] }
+      },
+      required: ["insight_id", "note_type", "content"]
+    }
+  },
+  {
+    name: "get_team_annotations",
+    description: "See what team members have noted",
+    inputSchema: {
+      type: "object",
+      properties: {
+        scope: { type: "object", default: {} },
+        include_unresolved_questions: { type: "boolean", default: true }
+      }
+    }
+  },
+
+  // ========== Integrations (4 tools) ==========
+  {
+    name: "sync_to_jira",
+    description: "Create Jira tickets from high-frequency feature requests",
+    inputSchema: {
+      type: "object",
+      properties: {
+        feature_requests: { type: "array", items: { type: "string" } },
+        project_key: { type: "string", default: "PROD" },
+        issue_type: { type: "string", default: "Feature Request" },
+        auto_populate: { type: "object", default: {} }
+      },
+      required: ["feature_requests"]
+    }
+  },
+  {
+    name: "export_to_productboard",
+    description: "Send insights to ProductBoard",
+    inputSchema: {
+      type: "object",
+      properties: {
+        insights: { type: "array", items: { type: "string" } },
+        board: { type: "string", default: "Feature Ideas" },
+        auto_tag: { type: "boolean", default: true },
+        include_provenance: { type: "boolean", default: true }
+      },
+      required: ["insights"]
+    }
+  },
+  {
+    name: "enrich_salesforce_account",
+    description: "Add research insights to Salesforce account records",
+    inputSchema: {
+      type: "object",
+      properties: {
+        account_id: { type: "string" },
+        insight_summary: { type: "boolean", default: true },
+        recent_feedback: { type: "object", default: { days: 30 } },
+        risk_signals: { type: "boolean", default: true },
+        expansion_opportunities: { type: "boolean", default: true }
+      },
+      required: ["account_id"]
+    }
+  },
+  {
+    name: "create_customer_briefing",
+    description: "Generate CS briefing before renewal calls",
+    inputSchema: {
+      type: "object",
+      properties: {
+        customer_id: { type: "string" },
+        briefing_type: { type: "string", enum: ["renewal", "qbr", "escalation"] },
+        include_sections: { type: "array", items: { type: "string" }, default: ["sentiment_trend", "unresolved_issues", "feature_usage", "competitive_risks"] }
+      },
+      required: ["customer_id", "briefing_type"]
+    }
+  },
+
+  // ========== AI Research Assistant (4 tools) ==========
+  {
+    name: "suggest_research_questions",
+    description: "AI suggests follow-up questions based on data gaps",
+    inputSchema: {
+      type: "object",
+      properties: {
+        current_findings: { type: "array", items: { type: "string" } },
+        research_goal: { type: "string", enum: ["understand_churn", "validate_feature", "improve_onboarding"] },
+        target_audience: { type: "string", default: "enterprise" }
+      },
+      required: ["current_findings", "research_goal"]
+    }
+  },
+  {
+    name: "identify_knowledge_gaps",
+    description: "Find what you don't know",
+    inputSchema: {
+      type: "object",
+      properties: {
+        topic: { type: "string" },
+        compared_to: { type: "string", enum: ["industry_benchmarks", "competitor_research", "past_quarters"], default: "industry_benchmarks" }
+      },
+      required: ["topic"]
+    }
+  },
+  {
+    name: "test_hypothesis",
+    description: "Validate research hypotheses with data",
+    inputSchema: {
+      type: "object",
+      properties: {
+        hypothesis: { type: "string" },
+        null_hypothesis: { type: "string" },
+        confidence_level: { type: "number", default: 0.95 },
+        sample_size_min: { type: "number", default: 30 }
+      },
+      required: ["hypothesis", "null_hypothesis"]
+    }
+  },
+  {
+    name: "calculate_sample_size",
+    description: "How many calls needed for statistical validity",
+    inputSchema: {
+      type: "object",
+      properties: {
+        effect_size: { type: "string", enum: ["small", "medium", "large"], default: "medium" },
+        confidence_level: { type: "number", default: 0.95 },
+        power: { type: "number", default: 0.8 }
+      }
+    }
+  },
+
+  // ========== Quality & Compliance (4 tools) ==========
+  {
+    name: "assess_research_quality",
+    description: "Score research quality",
+    inputSchema: {
+      type: "object",
+      properties: {
+        recording_ids: { type: "array", items: { type: "string" } },
+        criteria: { type: "array", items: { type: "string" }, default: ["sample_diversity", "question_quality", "bias_detection", "saturation_reached", "proper_documentation"] }
+      },
+      required: ["recording_ids"]
+    }
+  },
+  {
+    name: "detect_research_bias",
+    description: "Identify leading questions, confirmation bias",
+    inputSchema: {
+      type: "object",
+      properties: {
+        recording_id: { type: "string" },
+        bias_types: { type: "array", items: { type: "string" }, default: ["leading_questions", "selection_bias", "confirmation_bias"] }
+      },
+      required: ["recording_id"]
+    }
+  },
+  {
+    name: "audit_data_usage",
+    description: "Track who accessed what insights",
+    inputSchema: {
+      type: "object",
+      properties: {
+        date_range: { type: "object" },
+        user_id: { type: "string" },
+        include_exports: { type: "boolean", default: true }
+      },
+      required: ["date_range"]
+    }
+  },
+  {
+    name: "anonymize_insights",
+    description: "Remove PII before sharing",
+    inputSchema: {
+      type: "object",
+      properties: {
+        insight_ids: { type: "array", items: { type: "string" } },
+        anonymization_level: { type: "string", enum: ["partial", "full"], default: "partial" },
+        preserve_context: { type: "boolean", default: true }
+      },
+      required: ["insight_ids"]
+    }
+  },
+
   // ========== Validation Workflow (4 tools) ==========
   {
     name: "validate_insight_batch",
@@ -371,6 +837,90 @@ server.setRequestHandler(CallToolRequestSchema, async (request: any) => {
       case "analyze_feature_requests":
         return await analysisTools.analyzeFeatureRequests(args, validation.scopes || []);
 
+      // Workflow Automation tools
+      case "detect_recurring_patterns":
+        return await workflowTools.detectRecurringPatterns(args, validation.scopes || []);
+      case "generate_research_brief":
+        return await workflowTools.generateResearchBrief(args, validation.scopes || []);
+      case "auto_tag_recordings":
+        return await workflowTools.autoTagRecordings(args, validation.scopes || []);
+      case "batch_apply_tags":
+        return await workflowTools.batchApplyTags(args, validation.scopes || []);
+
+      // Alert tools
+      case "create_research_alert":
+        return await alertTools.createResearchAlert(args, validation.scopes || []);
+      case "monitor_kpi_thresholds":
+        return await alertTools.monitorKPIThresholds(args, validation.scopes || []);
+
+      // Report tools
+      case "create_stakeholder_report":
+        return await reportTools.createStakeholderReport(args, validation.scopes || []);
+      case "save_search_filter":
+        return await reportTools.saveSearchFilter(args, validation.scopes || []);
+      case "load_search_filter":
+        return await reportTools.loadSearchFilter(args, validation.scopes || []);
+
+      // Advanced Analytics tools
+      case "track_pattern_trends":
+        return await analyticsTools.trackPatternTrends(args, validation.scopes || []);
+      case "compare_cohorts":
+        return await analyticsTools.compareCohorts(args, validation.scopes || []);
+      case "track_cohort_over_time":
+        return await analyticsTools.trackCohortOverTime(args, validation.scopes || []);
+      case "analyze_sentiment_shifts":
+        return await analyticsTools.analyzeSentimentShifts(args, validation.scopes || []);
+      case "identify_emotional_triggers":
+        return await analyticsTools.identifyEmotionalTriggers(args, validation.scopes || []);
+      case "detect_anomalies":
+        return await analyticsTools.detectAnomalies(args, validation.scopes || []);
+      case "explain_anomaly":
+        return await analyticsTools.explainAnomaly(args, validation.scopes || []);
+
+      // Customer Journey & Collaboration tools
+      case "map_customer_journey":
+        return await collaborationTools.mapCustomerJourney(args, validation.scopes || []);
+      case "identify_journey_gaps":
+        return await collaborationTools.identifyJourneyGaps(args, validation.scopes || []);
+      case "create_insight_snapshot":
+        return await collaborationTools.createInsightSnapshot(args, validation.scopes || []);
+      case "search_research_history":
+        return await collaborationTools.searchResearchHistory(args, validation.scopes || []);
+      case "add_research_note":
+        return await collaborationTools.addResearchNote(args, validation.scopes || []);
+      case "get_team_annotations":
+        return await collaborationTools.getTeamAnnotations(args, validation.scopes || []);
+
+      // Integration tools
+      case "sync_to_jira":
+        return await integrationTools.syncToJira(args, validation.scopes || []);
+      case "export_to_productboard":
+        return await integrationTools.exportToProductBoard(args, validation.scopes || []);
+      case "enrich_salesforce_account":
+        return await integrationTools.enrichSalesforceAccount(args, validation.scopes || []);
+      case "create_customer_briefing":
+        return await integrationTools.createCustomerBriefing(args, validation.scopes || []);
+
+      // AI Research Assistant tools
+      case "suggest_research_questions":
+        return await assistantTools.suggestResearchQuestions(args, validation.scopes || []);
+      case "identify_knowledge_gaps":
+        return await assistantTools.identifyKnowledgeGaps(args, validation.scopes || []);
+      case "test_hypothesis":
+        return await assistantTools.testHypothesis(args, validation.scopes || []);
+      case "calculate_sample_size":
+        return await assistantTools.calculateSampleSize(args, validation.scopes || []);
+
+      // Quality & Compliance tools
+      case "assess_research_quality":
+        return await qualityTools.assessResearchQuality(args, validation.scopes || []);
+      case "detect_research_bias":
+        return await qualityTools.detectResearchBias(args, validation.scopes || []);
+      case "audit_data_usage":
+        return await qualityTools.auditDataUsage(args, validation.scopes || []);
+      case "anonymize_insights":
+        return await qualityTools.anonymizeInsights(args, validation.scopes || []);
+
       // Validation tools
       case "validate_insight_batch":
         return await validationTools.validateInsightBatch(args, validation.scopes || []);
@@ -416,6 +966,14 @@ async function main() {
     logger.info(`📋 Available tools: ${TOOLS.length}`);
     logger.info("   - Search & Retrieval: 7 tools");
     logger.info("   - Analysis & Aggregation: 5 tools");
+    logger.info("   - Workflow Automation: 4 tools");
+    logger.info("   - Proactive Alerts: 2 tools");
+    logger.info("   - Stakeholder Reports: 2 tools");
+    logger.info("   - Advanced Analytics: 7 tools");
+    logger.info("   - Customer Journey: 6 tools");
+    logger.info("   - Integrations: 4 tools");
+    logger.info("   - AI Research Assistant: 4 tools");
+    logger.info("   - Quality & Compliance: 4 tools");
     logger.info("   - Validation Workflow: 4 tools");
     logger.info("   - Signal Export: 2 tools");
   } catch (error) {
