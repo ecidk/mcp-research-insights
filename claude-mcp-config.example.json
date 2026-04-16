@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "research-insights": {
+      "command": "node",
+      "args": ["/ABSOLUTE/PATH/TO/mcp-research-insights-public/dist/index.js"],
+      "env": {
+        "SUPABASE_URL": "https://YOUR_PROJECT.supabase.co",
+        "SUPABASE_SERVICE_ROLE_KEY": "YOUR_SERVICE_ROLE_KEY_HERE",
+        "NODE_ENV": "production",
+        "LOG_LEVEL": "info",
+        "MCP_SERVER_NAME": "research-insights",
+        "MCP_SERVER_VERSION": "2.0.0"
+      }
+    }
+  }
+}

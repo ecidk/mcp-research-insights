@@ -28,6 +28,10 @@ Thumbs.db
 
 # Local config (may contain secrets)
 .mcp.json
+claude-mcp-config.json
+cursor-mcp-config.json
+.cursor/
+.claude/
 
 # Test coverage
 coverage/
